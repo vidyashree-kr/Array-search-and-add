@@ -11,9 +11,9 @@ export default class FavMovie extends React.Component {
       searched:false,
       data: [
         { name: "Avengers", ratings: "5", duration: "2:53:52" },
-        { name: "Avanthika", ratings: "5", duration: "2:53:52" },
-        { name: "AvctionKing", ratings: "5", duration: "2:02:12" },
-        { name: "Cat Walk", ratings: "4.5", duration: "01:03:01" },
+        { name: "Avatar", ratings: "5", duration: "2:53:52" },
+        { name: "Action King", ratings: "5", duration: "2:02:12" },
+        { name: "Wonder women", ratings: "4.5", duration: "01:03:01" },
         { name: "The Jungle Book", ratings: "3.6", duration: "2:53:08" },
         { name: "Warriors", ratings: "2.5", duration: "2:53:52" }
       ],
@@ -24,40 +24,39 @@ export default class FavMovie extends React.Component {
   handleSearch = e => {
     e.preventDefault();
     const filterText = e.target.value;
-    
-    this.setState({ visibleButton: true });
-    this.setState({ movieDuration: null });
-    this.setState({ movieRate: null });
-    this.setState({ movieName: null });
+    if(this.state.movieName){
+      this.setState({ movieDuration: null });
+      this.setState({ movieRate: null });
+      this.setState({ movieName: null });
+      this.movieSearch(filterText);
+    }
+    else{
     this.setState({filterText})
     this.movieSearch(filterText);
+    }
   };
+
   movieSearch = filterText => {
-    console.log('searching',filterText)
     const { data } = this.state;
     try{
-    if (filterText.length > 1) {
-     
+    if (filterText.length >= 1) {
       const filterData = data.filter(movie => {
         const name = movie.name.toLowerCase();
         const ratings = movie.ratings.toLowerCase();
         const duration = movie.duration.toLowerCase();
         const filterValue = filterText.toLowerCase();
-        
         return (
-          console.log('pushu',name.startsWith(filterValue)),
           name.startsWith(filterValue) ||
           ratings.startsWith(filterValue) ||
           duration.startsWith(filterValue)
         );
       });
-      console.log('vidya ',data)
-    console.log('vidya in search',filterData)
       this.setState({ searchData: filterData });
       this.setState({searched:true})
     }
   } catch (e) {}
   };
+
   handleChange = e => {
     try {
       e.preventDefault();
@@ -71,9 +70,9 @@ export default class FavMovie extends React.Component {
       const name = e.target.nameInput.value;
       const rate = e.target.ratingsInput.value;
       const duration = e.target.durationInput.value;
-      obj["nameNew"] = name;
-      obj["rateNew"] = rate;
-      obj["durationNew"] = duration;
+      obj["name"] = name;
+      obj["ratings"] = rate;
+      obj["duration"] = duration;
       Arr.push(obj);
       data.push(obj)
       this.setState({data:data})
@@ -81,8 +80,6 @@ export default class FavMovie extends React.Component {
   };
 
   render() {
-    console.log('data',this.state.data)
-    console.log('searchdata',this.state.searchData)
     return (
       <div>
         <div style={{ marginBottom: 5, fontSize: 18, fontWeight: "bold" }}>

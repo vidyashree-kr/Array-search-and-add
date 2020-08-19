@@ -25,9 +25,7 @@ export default class FavMovie extends React.Component {
     e.preventDefault();
     const filterText = e.target.value;
     if(this.state.movieName){
-      this.setState({ movieDuration: null });
-      this.setState({ movieRate: null });
-      this.setState({ movieName: null });
+      this.setState({ movieDuration: null,movieRate: null,movieName: null });
       this.movieSearch(filterText);
     }
     else{
@@ -65,14 +63,11 @@ export default class FavMovie extends React.Component {
       this.setState({ movieDuration: e.target.durationInput.value });
       this.setState({ movieRate: e.target.ratingsInput.value });
       this.setState({ movieName: e.target.nameInput.value });
-      var obj = {};
       var Arr = [];
       const name = e.target.nameInput.value;
       const rate = e.target.ratingsInput.value;
       const duration = e.target.durationInput.value;
-      obj["name"] = name;
-      obj["ratings"] = rate;
-      obj["duration"] = duration;
+      var obj={"name":name,"ratings":rate,"duration":duration}
       Arr.push(obj);
       data.push(obj)
       this.setState({data:data})
